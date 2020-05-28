@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using TuneBaserMusicDB.Data;
 
 namespace TuneBaserMusicDB
 {
@@ -24,6 +26,9 @@ namespace TuneBaserMusicDB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<TunebaserDBContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("TunebaserDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
