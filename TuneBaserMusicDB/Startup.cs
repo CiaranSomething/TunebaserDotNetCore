@@ -27,8 +27,19 @@ namespace TuneBaserMusicDB
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<TunebaserDBContext>(options =>
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                services.AddDbContext<TunebaserDBContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("TunebaserDBProd")));
+            } else
+            {
+                services.AddDbContext<TunebaserDBContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("TunebaserDB")));
+            }
+
+            services.BuildServiceProvider()
+                    .GetService<TunebaserDBContext>().Database
+                    .Migrate();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

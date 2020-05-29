@@ -9,7 +9,7 @@ namespace TuneBaserMusicDB.Data
         {
         }
 
-
+        public DbSet<Artist> Artist { get; set; }
 
     }
 }
